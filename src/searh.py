@@ -50,19 +50,15 @@ def get_index_vector():
     dim = 1440
     index = faiss.IndexFlatL2(dim)
     index = faiss.read_index("train.index")
-    print(index.ntotal)
     total_dataset = get_total_dataset_from_db()
     vector_total = index.ntotal
 
-    if total_dataset > vector_total:
+    if len(total_dataset) > vector_total:
         for page in range(1, 100):
             page_size = 10000
 
             # find dimension vectors
-            if vector_total > 0:
-                data_vector = get_dataset_vector(page, page_size, vector_total)
-            else:
-                data_vector = get_dataset_vector(page, page_size)
+            data_vector = get_dataset_vector()
 
             if len(data_vector) > 0:
                 vector_total = vector_total + page_size
@@ -96,8 +92,8 @@ def get_image_similar(path_image):
 
     query = ""
     for j in range(total_results):
-        query += f"(select id, path from image_descriptor order by id LIMIT 1 offset {result_vector[0][j]}) union all"
-    cursor.execute(query[:-11])
+        query += f"(select id, path from image_descriptor order by id LIMIT 1 offset {result_vector[0][j]})"
+    cursor.execute(query)
     rows = cursor.fetchall()
     print(datetime.now())
     return rows
