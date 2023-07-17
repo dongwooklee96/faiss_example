@@ -2,7 +2,7 @@ import psycopg2
 
 HOSTNAME = 'localhost'
 USERNAME = 'postgres'
-PASSWORD = 'password'
+PASSWORD = 'pass'
 DATABASE_NAME = 'postgres'
 PORT = 5432
 
