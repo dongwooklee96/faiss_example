@@ -1,8 +1,9 @@
-from src.searh import *
+from faiss_index.faiss_index import FaissIndex
 
 if __name__ == '__main__':
-    origin_image = 'dataset/Black_Sabbath_-_Paranoid.jpeg'
-    path_image = 'test_dataset/hotel_california.jpg'
-    similar = get_image_similar(path_image)
-    print(similar)
+    index = FaissIndex()
+    path_image = 'test_dataset/download.jpg'
+
+    image = index.search_by_image(image=path_image, k=100)
+    print(image)
 
